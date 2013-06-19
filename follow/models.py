@@ -1,10 +1,13 @@
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import AnonymousUser
 from django.db import models
 from django.db.models.query import QuerySet
 from django.db.models.signals import post_save, post_delete
 from follow.registry import model_map
 from follow.signals import followed, unfollowed
 import inspect
+
+from django.conf import settings
+User = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 class FollowManager(models.Manager):
     def fname(self, model_or_obj_or_qs):

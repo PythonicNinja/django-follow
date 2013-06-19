@@ -1,10 +1,18 @@
 from django import template
-from django.contrib.auth.models import User, AnonymousUser, Group
+from django.contrib.auth.models import AnonymousUser, Group
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from follow import signals, utils
 from follow.models import Follow
 from follow.utils import register
+
+from django.conf import settings
+
+if 'AUTH_USER_MODEL' in settings:
+    import django.contrib.auth.get_user_model
+    User = django.contrib.auth.get_user_model()
+else:
+    from django.contrib.auth.models import User
 
 register(User)
 register(Group)
